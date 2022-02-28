@@ -37,6 +37,15 @@ function suiteData(data) {
     return suite
 }
 
+routes.get("/userdata", async (req,res) => {
+    try{
+        const {data} = await api.get("/")
+
+        return res.json(listData(data))
+    } catch (error){
+        console.error(error)
+    }
+})
 
 routes.get("/website", async (req,res) => {
     try{

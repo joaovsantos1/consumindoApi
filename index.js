@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const api = require('./src/services/api')
 const routes = require('./config/routes')
 
-
  const app = express()
 
  app.use(morgan('dev'))
