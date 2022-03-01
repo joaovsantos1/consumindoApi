@@ -6,42 +6,11 @@ routes.get('/', (req, res) => {
     return res.json({message: "esta funcionando!"})
 })
 
-function listData(data){
-    const users = data
-    const finalData = users.map(user => ({
-        name: user.name,
-        email: user.email,
-        companyName: user.companyName
-    }))
-
-    finalData.sort((a,b) => a.name.localeCompare(b.name))
-
-    return finalData
-}
-
-function websiteData(data){
-    const usuario = data
-    const userWeb = usuario.map(webs => ({website: webs.website}))
-
-    userWeb.sort((a,b) => a.name.localeCompare(b.name))
-
-    return userWeb
-}
-
-function suiteData(data) {
-    const userSuite = data
-    const suite = userSuite.filter(u => u.adress.suite.includes("Suite"))
-
-    suite.sort((a,b) => a.name.localeCompare(b.name))
-
-    return suite
-}
-
-routes.get("/userdata", async (req,res) => {
+routes.get("/users", async (req,res) => {
     try{
         const {data} = await api.get("/")
 
-        return res.json(listData(data))
+        return res.json(data)
     } catch (error){
         console.error(error)
     }
@@ -50,8 +19,9 @@ routes.get("/userdata", async (req,res) => {
 routes.get("/website", async (req,res) => {
     try{
         const {data} = await api.get("/")
-
-        return res.json(websiteData(data))
+        const userWeb = data.map(w => ({website: w.website}))
+        userWeb.sort((a,b) => a.name.localeCompare(b.name))
+        return res.json(websiteData(userWeb))
     } catch (error){
         console.error(error)
     }
@@ -60,8 +30,9 @@ routes.get("/website", async (req,res) => {
 routes.get("/usersuite", async (req,res) => {
     try{
         const {data} = await api.get("/")
-
-        return res.json(suiteData(data))
+        const suiteData = data.filter(u => u.adress.suite.includes("Suite"))
+        suiteData.sort((a,b) => a.name.localeCompare(b.name))
+        return res.json(suiteData(suiteData))
     } catch (error){
         console.error(error)
     }
